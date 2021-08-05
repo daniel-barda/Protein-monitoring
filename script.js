@@ -7,6 +7,7 @@ const main_body = document.querySelector('.main-body');
 const userUX = document.querySelector('.user');
 const items = document.querySelector('.list-group-item');
 const proteinInfo = document.querySelector('.protein');
+const MuchComplete = document.querySelector('.HowMuch');
 const progressBar = document.querySelector('.progress-bar');
 const reset = document.querySelector('.reset');
 
@@ -44,6 +45,9 @@ LoginBtn.addEventListener('click', function (e) {
     inputLoginpin.value = inputLoginUsername.value = '';
 
     proteinInfo.textContent = localStorage.getItem('SaveProtein');
+    MuchComplete.textContent = Math.abs(
+      localStorage.getItem('SaveProtein') - 98 // Calculation - How Much i Have to complete the protein
+    );
     progressUpdate(currentAccount.protein + '%');
   }
 });
@@ -69,6 +73,9 @@ document.querySelectorAll('.add-item').forEach(ele => {
     protein = currentAccount.protein.reduce((acc, val) => acc + Number(val), 0);
     proteinInfo.textContent = protein;
     localStorage.setItem('SaveProtein', protein);
+    MuchComplete.textContent = Math.abs(
+      localStorage.getItem('SaveProtein') - 98
+    );
     progressUpdate(protein + '%');
   });
 });
@@ -76,6 +83,7 @@ document.querySelectorAll('.add-item').forEach(ele => {
 reset.addEventListener('click', function () {
   currentAccount.protein = [0];
   proteinInfo.textContent = currentAccount.protein;
+  MuchComplete.textContent = 98;
   localStorage.setItem('SaveProtein', currentAccount.protein);
   progressBar.classList.remove('bg-success');
   progressBar.classList.add('bg-primary');
