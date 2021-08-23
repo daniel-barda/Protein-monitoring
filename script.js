@@ -33,6 +33,7 @@ const foods = new Map([
 ]);
 
 /*Login Btn*/
+
 LoginBtn.addEventListener('click', function (e) {
   e.preventDefault();
   currentAccount = profiles.find(
@@ -66,19 +67,39 @@ foods.forEach(function (value, index, arr) {
   items.insertAdjacentHTML('afterbegin', html);
 });
 
-document.querySelectorAll('.add-item').forEach(ele => {
-  ele.addEventListener('click', function (e) {
+document
+  .querySelector('.list-group-item')
+  .addEventListener('click', function (e) {
     e.preventDefault();
-    currentAccount.protein.push(e.target.getAttribute('data-protein'));
-    protein = currentAccount.protein.reduce((acc, val) => acc + Number(val), 0);
-    proteinInfo.textContent = protein;
-    localStorage.setItem('SaveProtein', protein);
-    MuchComplete.textContent = Math.abs(
-      localStorage.getItem('SaveProtein') - 98
-    );
-    progressUpdate(protein + '%');
+
+    if (e.target.classList.contains('add-item')) {
+      currentAccount.protein.push(e.target.getAttribute('data-protein'));
+      protein = currentAccount.protein.reduce(
+        (acc, val) => acc + Number(val),
+        0
+      );
+      proteinInfo.textContent = protein;
+      localStorage.setItem('SaveProtein', protein);
+      MuchComplete.textContent = Math.abs(
+        localStorage.getItem('SaveProtein') - 98
+      );
+      progressUpdate(protein + '%');
+    }
   });
-});
+
+// document.querySelectorAll('.add-item').forEach(ele => {
+//   ele.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     currentAccount.protein.push(e.target.getAttribute('data-protein'));
+//     protein = currentAccount.protein.reduce((acc, val) => acc + Number(val), 0);
+//     proteinInfo.textContent = protein;
+//     localStorage.setItem('SaveProtein', protein);
+//     MuchComplete.textContent = Math.abs(
+//       localStorage.getItem('SaveProtein') - 98
+//     );
+//     progressUpdate(protein + '%');
+//   });
+// });
 
 reset.addEventListener('click', function () {
   currentAccount.protein = [0];
