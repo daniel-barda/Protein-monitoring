@@ -1,5 +1,6 @@
 'use strict';
-/*Class*/
+
+/*Elements*/
 const LoginBtn = document.querySelector('.login__btn');
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginpin = document.querySelector('.login__input--pin');
@@ -11,10 +12,11 @@ const MuchComplete = document.querySelector('.HowMuch');
 const progressBar = document.querySelector('.progress-bar');
 const reset = document.querySelector('.reset');
 
+// Global
 let currentAccount;
 let protein;
-/*Profiles*/
 
+/*Profiles*/
 const profile1 = {
   username: 'Daniel',
   pin: 1234,
@@ -40,12 +42,14 @@ LoginBtn.addEventListener('click', function (e) {
     acc => acc.username === inputLoginUsername.value
   ); // find user
 
-  if (currentAccount?.pin === Number(inputLoginpin.value)) {
+  if (currentAccount?.pin === +inputLoginpin.value) {
     main_body.style.opacity = 100;
     userUX.textContent = `${currentAccount.username}`;
     inputLoginpin.value = inputLoginUsername.value = '';
-
+    if (!localStorage.getItem('SaveProtein'))
+      return (proteinInfo.textContent = 0);
     proteinInfo.textContent = localStorage.getItem('SaveProtein');
+
     MuchComplete.textContent = Math.abs(
       localStorage.getItem('SaveProtein') - 98 // Calculation - How Much i Have to complete the protein
     );
